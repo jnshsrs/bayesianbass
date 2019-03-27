@@ -4,6 +4,8 @@
 #'
 #' @return A character string containing the Bayesian Bass Diffusion Model specifications
 #'
+#' @export
+#'
 bayesian_bass_model <- function(){
   model <- "model {
     # likelihood

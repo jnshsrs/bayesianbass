@@ -6,6 +6,8 @@
 #'
 #' @return A numeric vector containing the coeficients where the first element is p and the second is q
 #'
+#' @export
+#'
 #' @examples
 coef.bayesian_bass <- function(x) {
   pluck(x, "coefs")
