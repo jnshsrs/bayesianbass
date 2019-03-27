@@ -17,5 +17,9 @@ Imports:
     Hmisc,
     rlang,
     scales,
-    magrittr
+    magrittr,
+    lubridate,
+    readr
 RoxygenNote: 6.1.1.9000
+Suggests: 
+    testthat

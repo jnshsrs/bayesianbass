@@ -4,19 +4,19 @@
 \alias{bayesian_bass}
 \title{Function to fit Bayesian Model}
 \usage{
-bayesian_bass(data, var, n_iter = 5000, introduction = NULL, model,
-  plot_diagnostics = FALSE)
+bayesian_bass(data, var, model, n_iter = 5000, n_thin = 50,
+  introduction = NULL, plot_diagnostics = FALSE)
 }
 \arguments{
 \item{data}{A data.frame with two columns, the first must be named jahr and contains time index, the second colum is named var and is a binary variable, representing}
 
 \item{var}{Column name of variable containing the dichotomous data of product adoption}
 
+\item{model}{Text string containing the Bayesian Model Specification}
+
 \item{n_iter}{Integer, number of iterations}
 
 \item{introduction}{Integer, if provided, the time column of data is rescaled to the date of market introduction}
-
-\item{model}{Text string containing the Bayesian Model Specification}
 
 \item{plot_diagnostics}{Wether to show diagnostic MCMC plots}
 }
@@ -27,5 +27,5 @@ An object of class \code{bayesian_bass}
 Function to fit Bayesian Model
 }
 \examples{
-\dontrun{bayesian_bass(data = data, var = "adoption", model = bayesian_bass_model())}
+\dontrun{bayesian_bass(data = data, var = 'adoption', model = bayesian_bass_model())}
 }

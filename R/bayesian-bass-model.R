@@ -35,59 +35,80 @@ bayesian_bass_model <- function() {
 #' @return An object of class \code{bayesian_bass}
 #' @export
 #'
+#' @import dplyr
+#' @import tibble
+#' @import tidyr
+#' @import purrr
+#' @import readr
+#'
+#'
 #' @examples \dontrun{bayesian_bass(data = data, var = 'adoption', model = bayesian_bass_model())}
-bayesian_bass <- function(data, var, n_iter = 5000, introduction = NULL, model, plot_diagnostics = FALSE) {
-    
-    # data preprocessing
-    data <- data %>% select(jahr, var) %>% filter(complete.cases(.))
-    
-    # summary, compute adoption rates
-    adoption_rates <- data %>% group_by(jahr) %>% summarise(n = n(), st_err = list(Hmisc::smean.cl.boot(!!rlang::sym(var)))) %>% mutate(st_err = st_err %>% 
-        map(enframe)) %>% unnest(st_err) %>% spread(key = name, value = value) %>% mutate_at("jahr", function(x) parse_date(as.character(x), 
-        format = "%Y")) %>% rename(t = jahr, avg = Mean)
-    
-    # Convert year data into index since market launch
-    if (!is.null(introduction)) {
-        t <- data %>% mutate(Time = jahr - introduction) %>% pull(Time)
-    } else {
-        introduction <- 0
-        t <- data %>% pull(Time)
-    }
-    
-    # outcome variable
-    y <- data %>% pull(var)
-    
-    # Number of data points
-    N <- nrow(data)
-    
-    # Creating list for data interface of rjags bayesian models
-    data <- list(y = y, t = t, N = N)
-    
-    # Create rjags model
-    rjags_model <- rjags::jags.model(textConnection(model), data = data, n.chains = 4)
-    
-    # Simulate MCMC
-    rjags_sample <- rjags::coda.samples(rjags_model, variable.names = c("p", "q"), n.iter = n_iter, thin = 50)
-    
-    if (plot_diagnostics) {
-        # MCMC Diagnostics
-        plot(rjags_sample)
-    }
-    
-    # Extracting Chains
-    rjags_chains <- rjags_sample[[1]] %>% as_tibble()
-    
-    # Computing Mean values of p and q
-    coefs <- rjags_chains %>% as_tibble() %>% summarise_all(mean)
-    
-    # Converting idx back to year
-    data$t <- data$t + introduction
-    
-    
-    # Create return value (List)
-    lst_results <- list(adoption_rates = adoption_rates, coefs = coefs, rjags_chains = rjags_chains, rjags_sample = rjags_sample, data = data, 
-        introduction = introduction)
-    
-    class(lst_results) <- "bayesian_bass"
-    lst_results
+bayesian_bass <- function(data,
+                          var,
+                          model,
+                          n_iter = 5000,
+                          n_thin = 50,
+                          introduction = NULL,
+                          plot_diagnostics = FALSE) {
+
+  # data preprocessing
+  data <- data %>% dplyr::select(time_index, var) %>% dplyr::filter(complete.cases(.))
+
+  # summary, compute adoption rates
+  adoption_rates <- data %>% dplyr::group_by(time_index) %>%
+    summarise(n = n(), st_err = list(Hmisc::smean.cl.boot(!!rlang::sym(var)))) %>%
+    mutate(st_err = st_err %>%
+             map(enframe)) %>%
+    unnest(st_err) %>%
+    spread(key = name, value = value) %>%
+    mutate_at("time_index", function(x) parse_date(as.character(x), format = "%Y")) %>%
+    rename(t = time_index, avg = Mean)
+
+  # Convert year data into index since market launch
+  if (!is.null(introduction)) {
+    t <- data %>% mutate(time_index = time_index - introduction) %>% pull(time_index)
+  } else {
+    introduction <- 0
+    t <- data %>% pull(time_index)
+  }
+
+  # outcome variable
+  y <- data %>% pull(var)
+
+  # Number of data points
+  N <- nrow(data)
+
+  # Creating list for data interface of rjags bayesian models
+  data <- list(y = y, t = t, N = N)
+
+  # Create rjags model
+  rjags_model <- rjags::jags.model(textConnection(model), data = data, n.chains = 4)
+
+  # Simulate MCMC
+  rjags_sample <- rjags::coda.samples(rjags_model, variable.names = c("p", "q"), n.iter = n_iter, thin = n_thin)
+
+  if (plot_diagnostics) {
+    # MCMC Diagnostics
+    plot(rjags_sample)
+  }
+
+  # Extracting Chains
+  rjags_chains <- rjags_sample[[1]] %>% as_tibble()
+
+  # Computing Mean values of p and q
+  coefs <- rjags_chains %>% as_tibble() %>% summarise_all(mean)
+
+  # Converting idx back to year
+  data$t <- data$t + introduction
+
+  # Create return value (List)
+  lst_results <- list(adoption_rates = adoption_rates,
+                      coefs = coefs,
+                      rjags_chains = rjags_chains,
+                      rjags_sample = rjags_sample,
+                      data = data,
+                      introduction = introduction)
+
+  class(lst_results) <- "bayesian_bass"
+  lst_results
 }
