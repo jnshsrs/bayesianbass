@@ -2,5 +2,7 @@
 
 S3method(plot,bayesian_bass)
 S3method(predict,bayesian_bass)
+export("%>%")
 export(bayesian_bass)
 export(compute_range)
+importFrom(magrittr,"%>%")

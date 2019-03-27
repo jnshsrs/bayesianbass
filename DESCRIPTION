@@ -6,7 +6,8 @@ Author: Jens Hüsers
 Maintainer: Jens Hüsers <jenshuesers@gmail.com>
 Description: The package provides function to fit Bayesian Bass Models and estimate the parameter p and q.
   Furthermore, it offers functions to plot the diffusion curve and predict adoption rates.
-License: What license is it under?
+  Currently it supports only non aggregated data, that is, raw data must contain an binary adoption status of each entity
+License: MIT
 Encoding: UTF-8
 LazyData: true
 Imports: 
@@ -15,5 +16,6 @@ Imports:
     rjags,
     Hmisc,
     rlang,
-    scales
+    scales,
+    magrittr
 RoxygenNote: 6.1.1.9000
