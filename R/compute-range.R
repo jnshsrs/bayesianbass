@@ -13,8 +13,8 @@
 #' y <- rnorm(100, sd = 40)
 #' plot(x, y, xlim = compute_range(x), ylim = compute_range(y))
 compute_range <- function(x) {
-  min_max <- purrr::invoke_map_dbl(.f = list(min, max), x = x)
-  sdev <- sd(x)
-  min_max + c(-1, 1) * sdev
+    min_max <- purrr::invoke_map_dbl(.f = list(min, max), x = x)
+    sdev <- sd(x)
+    min_max + c(-1, 1) * sdev
 }
 

@@ -15,3 +15,6 @@ A tibble with two columns, time and prediction
 \description{
 Bass Model Predictions
 }
+\examples{
+\dontrun{predict(bass_model)}
+}

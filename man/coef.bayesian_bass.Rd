@@ -15,3 +15,8 @@ A numeric vector containing the coeficients where the first element is p and the
 \description{
 A function to extract the Bass model coefficients
 }
+\examples{
+\dontrun{
+coef(bayesian_bass)
+}
+}

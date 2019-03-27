@@ -26,3 +26,6 @@ An object of class \code{bayesian_bass}
 \description{
 Function to fit Bayesian Model
 }
+\examples{
+\dontrun{bayesian_bass(data = data, var = "adoption", model = bayesian_bass_model())}
+}

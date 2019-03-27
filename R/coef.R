@@ -8,7 +8,9 @@
 #'
 #' @export
 #'
-#' @examples
+#' @examples \dontrun{
+#' coef(bayesian_bass)
+#' }
 coef.bayesian_bass <- function(x) {
-  pluck(x, "coefs")
+    pluck(x, "coefs")
 }
