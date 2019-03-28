@@ -16,3 +16,17 @@ test_that("Baysian Model has correct class", {
 test_that("coefficents have correct names", {
   testthat::expect_named(coef(fitted_bayesian_bass), c("p", "q"))
 })
+
+
+
+test_that("values have the correct data type", {
+  NULL
+  # eg. time index is integer
+})
+
+test_that("no missing values in input data", {
+  NULL
+})
+
+
+

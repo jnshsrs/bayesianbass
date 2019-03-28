@@ -4,7 +4,7 @@
 \alias{predict.bayesian_bass}
 \title{Bass Model Predictions}
 \usage{
-\method{predict}{bayesian_bass}(object)
+\method{predict}{bayesian_bass}(object, intervals = NULL)
 }
 \arguments{
 \item{object}{An \code{bayesian_bass} object}

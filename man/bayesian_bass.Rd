@@ -5,7 +5,7 @@
 \title{Function to fit Bayesian Model}
 \usage{
 bayesian_bass(data, var, model, n_iter = 5000, n_thin = 50,
-  introduction = NULL, plot_diagnostics = FALSE)
+  plot_diagnostics = FALSE)
 }
 \arguments{
 \item{data}{A data.frame with two columns, the first must be named jahr and contains time index, the second colum is named var and is a binary variable, representing}
@@ -16,9 +16,9 @@ bayesian_bass(data, var, model, n_iter = 5000, n_thin = 50,
 
 \item{n_iter}{Integer, number of iterations}
 
-\item{introduction}{Integer, if provided, the time column of data is rescaled to the date of market introduction}
-
 \item{plot_diagnostics}{Wether to show diagnostic MCMC plots}
+
+\item{introduction}{Integer, if provided, the time column of data is rescaled to the date of market introduction}
 }
 \value{
 An object of class \code{bayesian_bass}

@@ -10,7 +10,7 @@ bayesian_bass_model <- function() {
     model <- "model {
     # likelihood
     for(i in 1:N) {
-      mu[i] <- (1 - exp(-(p + q) * t[i])) / (1 + (q / p) * exp(-(p + q) * t[i]))
+      mu[i] <- (1 - exp(-(p + q) * time[i])) / (1 + (q / p) * exp(-(p + q) * time[i]))
       y[i] ~ dbern(mu[i])
     }
 
@@ -48,7 +48,6 @@ bayesian_bass <- function(data,
                           model,
                           n_iter = 5000,
                           n_thin = 50,
-                          introduction = NULL,
                           plot_diagnostics = FALSE) {
 
   # data preprocessing
@@ -61,25 +60,19 @@ bayesian_bass <- function(data,
              map(enframe)) %>%
     unnest(st_err) %>%
     spread(key = name, value = value) %>%
-    mutate_at("time_index", function(x) parse_date(as.character(x), format = "%Y")) %>%
     rename(t = time_index, avg = Mean)
-
-  # Convert year data into index since market launch
-  if (!is.null(introduction)) {
-    t <- data %>% mutate(time_index = time_index - introduction) %>% pull(time_index)
-  } else {
-    introduction <- 0
-    t <- data %>% pull(time_index)
-  }
 
   # outcome variable
   y <- data %>% pull(var)
+
+  # extract time
+  time <- data %>% pull(time_index)
 
   # Number of data points
   N <- nrow(data)
 
   # Creating list for data interface of rjags bayesian models
-  data <- list(y = y, t = t, N = N)
+  data <- list(y = y, time = time, N = N)
 
   # Create rjags model
   rjags_model <- rjags::jags.model(textConnection(model), data = data, n.chains = 4)
@@ -98,16 +91,12 @@ bayesian_bass <- function(data,
   # Computing Mean values of p and q
   coefs <- rjags_chains %>% as_tibble() %>% summarise_all(mean)
 
-  # Converting idx back to year
-  data$t <- data$t + introduction
-
   # Create return value (List)
   lst_results <- list(adoption_rates = adoption_rates,
                       coefs = coefs,
                       rjags_chains = rjags_chains,
                       rjags_sample = rjags_sample,
-                      data = data,
-                      introduction = introduction)
+                      data = data)
 
   class(lst_results) <- "bayesian_bass"
   lst_results

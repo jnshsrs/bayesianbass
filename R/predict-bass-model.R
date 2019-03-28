@@ -1,22 +1,27 @@
 #' Bass Model Predictions
 #'
 #' @param object An \code{bayesian_bass} object
+#' @params interval An integer vector containing the time points of data collection
 #'
 #' @return A tibble with two columns, time and prediction
+#'
 #'
 #' @export
 #'
 #' @examples \dontrun{predict(bass_model)}
-predict.bayesian_bass <- function(object) {
+predict.bayesian_bass <- function(object, intervals = NULL) {
 
+  if (is.null(intervals)) {
     t <- 0:40
-    p <- object$coefs$p
-    q <- object$coefs$q
-    introduction <- object$introduction
+  } else {
+    t <- intervals
+  }
 
-    predicted <- (1 - exp(-(p + q) * t))/(1 + (q/p) * exp(-(p + q) * t))
+  p <- coef(object) %>% pluck("p")
+  q <- coef(object) %>% pluck("q")
 
-    tibble::tibble(t = t + introduction, predicted = predicted) %>% mutate_at("t", function(x) readr::parse_date(as.character(x), format = "%Y"))
+  predicted <- (1 - exp(-(p + q) * t))/(1 + (q/p) * exp(-(p + q) * t))
+
+  tibble::tibble(t = t, predicted = predicted)
 
 }
-
