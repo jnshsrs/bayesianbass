@@ -12,5 +12,5 @@
 #' coef(bayesian_bass)
 #' }
 coef.bayesian_bass <- function(x) {
-    pluck(x, "coefs")
+    purrr::pluck(x, "coefs")
 }
