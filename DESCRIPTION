@@ -19,7 +19,8 @@ Imports:
     scales,
     magrittr,
     lubridate,
-    readr
+    readr,
+    ggplot2
 RoxygenNote: 6.1.1.9000
 Suggests: 
     testthat
