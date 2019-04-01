@@ -4,7 +4,7 @@
 \alias{predict_bass}
 \title{Internal Function used by different predict functions}
 \usage{
-predict_bass(p, q, t)
+predict_bass(p, q, time)
 }
 \value{
 
