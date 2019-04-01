@@ -12,9 +12,11 @@
 #' @import ggplot2
 #'
 #' @examples
-#' \dontrun{
-#' plot(bayesian_bass_model)
-#' }
+#' data(adoption_data)
+#' model <- bayesian_bass_model()
+#' fit <- bayesian_bass(data = adoption_data, var = "adoption", model = model)
+#' plot(fit)
+#'
 plot.bayesian_bass <- function(x, se = F, ...) {
 
     pred <- predict(x)

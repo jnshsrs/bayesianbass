@@ -16,7 +16,9 @@ A numeric vector containing the coeficients where the first element is p and the
 A function to extract the Bass model coefficients
 }
 \examples{
-\dontrun{
-coef(bayesian_bass)
-}
+data(adoption_data)
+model <- bayesian_bass_model()
+fit <- bayesian_bass(data = adoption_data, var = "adoption", model = model)
+coef(fit)
+
 }

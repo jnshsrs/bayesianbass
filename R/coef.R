@@ -8,9 +8,16 @@
 #'
 #' @export
 #'
-#' @examples \dontrun{
-#' coef(bayesian_bass)
-#' }
+#' @examples
+#' data(adoption_data)
+#' model <- bayesian_bass_model()
+#' fit <- bayesian_bass(data = adoption_data, var = "adoption", model = model)
+#' coef(fit)
+#'
 coef.bayesian_bass <- function(x) {
-    purrr::pluck(x, "coefs")
+    coefficients <- purrr::pluck(x, "coefs")
+    class(coefficients) <- "bass_coefficients"
+    return(coefficients)
 }
+
+# Compute HDI

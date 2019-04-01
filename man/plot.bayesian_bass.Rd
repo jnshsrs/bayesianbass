@@ -20,7 +20,9 @@ A ggplot object
 Plots the diffusion curve and the actual observed adoption rates on a timeline plot
 }
 \examples{
-\dontrun{
-plot(bayesian_bass_model)
-}
+data(adoption_data)
+model <- bayesian_bass_model()
+fit <- bayesian_bass(data = adoption_data, var = "adoption", model = model)
+plot(fit)
+
 }

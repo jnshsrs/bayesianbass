@@ -6,8 +6,8 @@
 #'
 #' @export
 #'
-bayesian_bass_model <- function() {
-    model <- "model {
+bayesian_bass_model <- function(p_mean = 1e-6, p_sdev = .5, q_mean = 1e-6, q_sdev = .5) {
+  model <- paste0("model {
     # likelihood
     for(i in 1:N) {
       mu[i] <- (1 - exp(-(p + q) * time[i])) / (1 + (q / p) * exp(-(p + q) * time[i]))
@@ -15,11 +15,11 @@ bayesian_bass_model <- function() {
     }
 
     # priors of model coefficients
-    p ~ dnorm(.04, .06)
-    q ~ dnorm(.4, .6)
+    p ~ dnorm(", p_mean, ", ", p_sdev, ")
+    q ~ dnorm(", q_mean, ", ", q_sdev, ")
     }
-  "
-    return(model)
+  ")
+  return(model)
 }
 
 
@@ -42,7 +42,12 @@ bayesian_bass_model <- function() {
 #' @import readr
 #'
 #'
-#' @examples \dontrun{bayesian_bass(data = data, var = 'adoption', model = bayesian_bass_model())}
+#' @examples
+#' data(adoption_data)
+#' model <- bayesian_bass_model()
+#' fit <- bayesian_bass(data = adoption_data, var = "adoption", model = model)
+#'
+#'
 bayesian_bass <- function(data,
                           var,
                           model,
@@ -86,7 +91,7 @@ bayesian_bass <- function(data,
   }
 
   # Extracting Chains
-  rjags_chains <- rjags_sample[[1]] %>% as_tibble()
+  rjags_chains <- rjags_sample %>% map(tibble::as_tibble) %>% bind_rows()
 
   # Computing Mean values of p and q
   coefs <- rjags_chains %>% as_tibble() %>% summarise_all(mean)
@@ -95,9 +100,9 @@ bayesian_bass <- function(data,
   lst_results <- list(adoption_rates = adoption_rates,
                       coefs = coefs,
                       rjags_chains = rjags_chains,
-                      rjags_sample = rjags_sample,
                       data = data)
 
   class(lst_results) <- "bayesian_bass"
+  # Test
   lst_results
 }

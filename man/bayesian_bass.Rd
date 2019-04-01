@@ -27,5 +27,9 @@ An object of class \code{bayesian_bass}
 Function to fit Bayesian Model
 }
 \examples{
-\dontrun{bayesian_bass(data = data, var = 'adoption', model = bayesian_bass_model())}
+data(adoption_data)
+model <- bayesian_bass_model()
+fit <- bayesian_bass(data = adoption_data, var = "adoption", model = model)
+
+
 }
