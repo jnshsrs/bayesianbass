@@ -14,3 +14,15 @@ testthat::test_that("the predictions support all necessary features.", {
   testthat::expect_lte(max(posterior_distr), 1)
   testthat::expect_s3_class(posterior_distr, "bayesian_bass_posterior")
 })
+
+
+
+testthat::test_that("the predict diffusion function is ok", {
+  data(adoption_data)
+  model <- bayesian_bass_model()
+  fit <- bayesian_bass(data = adoption_data, var = "adoption", model = model)
+  predicted_diffusion <- predict_diffusion(fit)
+
+  testthat::expect_equal(length(names(predicted_diffusion)), 2)
+
+})

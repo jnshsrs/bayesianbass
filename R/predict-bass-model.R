@@ -85,8 +85,12 @@ predict_adoption <- function(obj, time) {
 
   coefs <- purrr::pluck(obj, "rjags_chains") %>% as.list()
   x <- purrr::pmap_dbl(coefs, predict_bass, t = time)
+
+  x <- list(adoption = x, time = time)
+
   class(x) <- "bayesian_bass_adoption"
   return(x)
+
 }
 
 #' Predict the diffusion based on a bayesian bass model
@@ -104,20 +108,25 @@ predict_adoption <- function(obj, time) {
 #' predict_diffusion(fit)
 predict_diffusion <- function(obj, time_index = NULL) {
 
-
   actual_adoption_rates <- purrr::pluck(obj, "adoption_rates")
-  upper_limit <- max(purrr::pluck(obj, "data", "time"))
-  time_index <- seq(upper_limit)
+
+  if (is.null(time_index)) {
+    upper_limit <- max(purrr::pluck(obj, "data", "time"))
+    time_index <- seq(upper_limit)
+  } else {
+    time_index <- time_index
+  }
 
   diffusion <- purrr::map(.x = time_index, .f = predict_adoption, obj = obj)
+  diffusion <- purrr::map(diffusion, purrr::pluck, "adoption")
 
   data_diffusion <- tibble::tibble(avg_adoption = purrr::map_dbl(diffusion, mean),
                                    sdev_adoption = purrr::map_dbl(diffusion, sd),
                                    hdi = purrr::map(diffusion, function(x) (HDInterval::hdi(object = x)))) %>%
-    mutate(hdi = hdi %>% map(enframe)) %>%
-    unnest(hdi) %>%
-    spread(key = name, value = value) %>%
-    rename(hdi_lower = lower, hdi_upper = upper)
+    dplyr::mutate(hdi = hdi %>% map(enframe)) %>%
+    tidyr::unnest(hdi) %>%
+    tidyr::spread(key = name, value = value) %>%
+    dplyr::rename(hdi_lower = lower, hdi_upper = upper)
 
   data <- list(
     "diffusion_predicted" = diffusion,

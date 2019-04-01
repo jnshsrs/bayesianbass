@@ -4,7 +4,7 @@
 \alias{plot.bayesian_bass_adoption}
 \title{Plot distribution of adoption rate}
 \usage{
-\method{plot}{bayesian_bass_adoption}(obj)
+\method{plot}{bayesian_bass_adoption}(obj, ...)
 }
 \arguments{
 \item{obj}{An object of class \code{bayesian_bass_adoption}}

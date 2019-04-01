@@ -91,10 +91,10 @@ plot.bayesian_bass_diffusion <- function(obj, hdi = TRUE) {
 #' fit_adoption <- predict_adoption(fit, time = 1)
 #' plot(fit_adoption)
 #'
-plot.bayesian_bass_adoption <- function(obj) {
+plot.bayesian_bass_adoption <- function(obj, ...) {
   data <- tibble(adoption = unlist(obj))
   data %>%
     ggplot(aes(x = adoption)) +
-    geom_density() +
-    scale_x_continuous("Adoption Rate", label = scales::percent)
+    geom_density(...) +
+    scale_x_continuous("Adoption Rate", label = scales::percent, ...)
 }
