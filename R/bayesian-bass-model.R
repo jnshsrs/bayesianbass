@@ -104,5 +104,5 @@ bayesian_bass <- function(data,
 
   class(lst_results) <- "bayesian_bass"
   # Test
-  lst_results
+  # Hier habe ich lst_results gelöscht
 }
