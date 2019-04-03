@@ -25,13 +25,16 @@ plot.bayesian_bass <- function(x, se = F, ...) {
 
     p <- ggplot(pred, aes(x = t, y = predicted)) +
       geom_line() +
-      geom_point(data = adoption_rates, aes(x = t, y = avg), inherit.aes = FALSE) +
+      geom_point(data = adoption_rates,
+                 aes(x = t, y = avg), inherit.aes = FALSE) +
       scale_y_continuous("Proportional Adoption", labels = scales::percent) +
       theme_minimal()
 
     if (se) {
         p <- p +
-          geom_errorbar(data = adoption_rates, aes(ymin = Lower, ymax = Upper, x = t), inherit.aes = FALSE)
+          geom_errorbar(data = adoption_rates,
+                        aes(ymin = Lower, ymax = Upper, x = t),
+                        inherit.aes = FALSE)
     }
 
     return(p)
@@ -52,9 +55,11 @@ plot.bayesian_bass <- function(x, se = F, ...) {
 #' fit_diffusion <- predict_diffusion(fit)
 #' plot(fit_diffusion)
 #'
-plot.bayesian_bass_diffusion <- function(obj, hdi = TRUE) {
+plot.bayesian_bass_diffusion <- function(obj, hdi = TRUE, title = TRUE) {
 
   x <- purrr::pluck(obj, "diffusion_data")
+
+  n <- purrr::pluck(obj, "diffusion_actual") %>% nrow
 
   x <- x %>% mutate(time = as.integer(seq(nrow(.))))
 
@@ -63,16 +68,23 @@ plot.bayesian_bass_diffusion <- function(obj, hdi = TRUE) {
   p <- x %>%
     ggplot(aes(x = time, y = avg_adoption)) +
     geom_line() +
-    geom_point(data = adoption_rates, aes(x = t, y = avg), inherit.aes = FALSE) +
+    geom_point(data = adoption_rates,
+               aes(x = t, y = avg), inherit.aes = FALSE) +
     scale_y_continuous("Adoption Rate", labels = scales::percent)
 
   if (hdi) {
-    p +
+    p <- p +
       geom_line(aes(x = time, y = hdi_lower), col = "grey") +
       geom_line(aes(x = time, y = hdi_upper), col = "grey")
-  } else {
-    p
   }
+
+  if (title) {
+    p <- p +
+      ggtitle(label = "Bayesian Bass Model",
+              subtitle = glue::glue("Time Series with {n} Data Points"))
+  }
+
+  return(p)
 
 }
 
@@ -96,5 +108,5 @@ plot.bayesian_bass_adoption <- function(obj, ...) {
   data %>%
     ggplot(aes(x = adoption)) +
     geom_density(...) +
-    scale_x_continuous("Adoption Rate", label = scales::percent, ...)
+    scale_x_continuous(limits = 0:1, "Adoption Rate", label = scales::percent)
 }

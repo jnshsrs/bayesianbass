@@ -4,7 +4,7 @@
 \alias{plot.bayesian_bass_diffusion}
 \title{Plot Diffusion Curve}
 \usage{
-\method{plot}{bayesian_bass_diffusion}(obj, hdi = TRUE)
+\method{plot}{bayesian_bass_diffusion}(obj, hdi = TRUE, title = TRUE)
 }
 \arguments{
 \item{obj}{A Bayesian Bass model}

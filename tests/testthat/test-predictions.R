@@ -22,7 +22,13 @@ testthat::test_that("the predict diffusion function is ok", {
   model <- bayesian_bass_model()
   fit <- bayesian_bass(data = adoption_data, var = "adoption", model = model)
   predicted_diffusion <- predict_diffusion(fit)
+  diffusion_data <- pluck(predicted_diffusion, "diffusion_data")
 
-  testthat::expect_equal(length(names(predicted_diffusion)), 2)
+
+  testthat::expect_equal(length(names(predicted_diffusion)), 3)
+  testthat::expect_true(is.data.frame(diffusion_data))
+  testthat::expect_gte(min(diffusion_data$avg_adoption), 0)
+  testthat::expect_lte(max(diffusion_data$avg_adoption), 1)
+
 
 })
