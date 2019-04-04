@@ -32,3 +32,4 @@ testthat::test_that("the predict diffusion function is ok", {
 
 
 })
+

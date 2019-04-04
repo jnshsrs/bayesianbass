@@ -108,7 +108,7 @@ predict_adoption <- function(obj, time) {
 #' predict_diffusion(fit)
 predict_diffusion <- function(obj, time_index = NULL) {
 
-  actual_adoption_rates <- purrr::pluck(obj, "adoption_rates")
+  actual_adoption_rates <- purrr::pluck(obj, "diffusion_actual")
 
   if (is.null(time_index)) {
     upper_limit <- max(purrr::pluck(obj, "data", "time"))
