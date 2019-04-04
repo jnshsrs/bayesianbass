@@ -21,7 +21,7 @@ plot.bayesian_bass <- function(x, se = F, ...) {
 
     pred <- predict(x)
 
-    adoption_rates <- x %>% pluck("diffusion_actual")
+    adoption_rates <- x %>% purrr::pluck("diffusion_actual")
 
     p <- ggplot(pred, aes(x = t, y = predicted)) +
       geom_line() +

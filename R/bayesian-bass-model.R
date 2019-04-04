@@ -97,7 +97,7 @@ bayesian_bass <- function(data,
   coefs <- rjags_chains %>% as_tibble() %>% summarise_all(mean)
 
   # Create return value (List)
-  lst_results <- list(adoption_rates = adoption_rates,
+  lst_results <- list(diffusion_actual = adoption_rates,
                       coefs = coefs,
                       rjags_chains = rjags_chains,
                       data = data)

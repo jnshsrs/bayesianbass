@@ -13,7 +13,7 @@ test_that("coefficents have correct names", {
 })
 
 test_that("values have the correct data type", {
-  testthat::expect_identical(names(fit), c("adoption_rates", "coefs", "rjags_chains", "data"))
+  testthat::expect_identical(names(fit), c("diffusion_actual", "coefs", "rjags_chains", "data"))
   testthat::expect_equal(length(names(fit)), 4)
 })
 
