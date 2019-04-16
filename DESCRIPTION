@@ -21,7 +21,8 @@ Imports:
     lubridate,
     readr,
     ggplot2,
-    glue
+    glue,
+    tidyr
 RoxygenNote: 6.1.1.9000
 Suggests: 
     testthat,
