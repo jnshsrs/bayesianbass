@@ -5,6 +5,7 @@
 -   [Installation](#installation)
 -   [Create a Bayesian Bass model](#create-a-bayesian-bass-model)
 -   [Outlook](#outlook)
+-   [Resources](#resources)
 
 Bayesian Bass Model
 ===================
@@ -89,7 +90,7 @@ print(fit)
     ## # A tibble: 1 x 2
     ##        p     q
     ##    <dbl> <dbl>
-    ## 1 0.0807 0.282
+    ## 1 0.0718 0.300
 
 Next we plot the adoption for each point in time with the fitted bass model superimposed as adoption curve.
 
@@ -111,9 +112,9 @@ head(predicted_uptake)
     ## # A tibble: 3 x 2
     ##       t predicted
     ##   <int>     <dbl>
-    ## 1     2     0.192
-    ## 2     3     0.304
-    ## 3     4     0.421
+    ## 1     2     0.176
+    ## 2     3     0.284
+    ## 3     4     0.398
 
 However, we did not use the advantages of the bayesian approach to Bass models, which will provide a complete distribution over parameters or predictions.
 
@@ -161,21 +162,21 @@ str(pred_diffusion)
 
     ## List of 3
     ##  $ diffusion_predicted:List of 10
-    ##   ..$ : num [1:800] 0.15912 0.10002 0.07898 0.00728 0.03495 ...
-    ##   ..$ : num [1:800] 0.302 0.2136 0.1739 0.0262 0.0916 ...
-    ##   ..$ : num [1:800] 0.4272 0.3348 0.2816 0.0731 0.1779 ...
-    ##   ..$ : num [1:800] 0.535 0.456 0.396 0.179 0.297 ...
-    ##   ..$ : num [1:800] 0.625 0.569 0.51 0.37 0.441 ...
-    ##   ..$ : num [1:800] 0.7 0.669 0.615 0.611 0.591 ...
-    ##   ..$ : num [1:800] 0.761 0.752 0.707 0.807 0.724 ...
-    ##   ..$ : num [1:800] 0.811 0.818 0.782 0.918 0.825 ...
-    ##   ..$ : num [1:800] 0.851 0.868 0.842 0.968 0.894 ...
-    ##   ..$ : num [1:800] 0.883 0.906 0.887 0.988 0.938 ...
+    ##   ..$ : num [1:800] 0.08204 0.01902 0.00713 0.05947 0.01473 ...
+    ##   ..$ : num [1:800] 0.1675 0.0535 0.0242 0.1381 0.0425 ...
+    ##   ..$ : num [1:800] 0.2544 0.1131 0.0635 0.2362 0.093 ...
+    ##   ..$ : num [1:800] 0.341 0.208 0.147 0.35 0.178 ...
+    ##   ..$ : num [1:800] 0.424 0.344 0.301 0.471 0.307 ...
+    ##   ..$ : num [1:800] 0.503 0.505 0.515 0.588 0.47 ...
+    ##   ..$ : num [1:800] 0.575 0.664 0.722 0.693 0.638 ...
+    ##   ..$ : num [1:800] 0.641 0.791 0.864 0.779 0.778 ...
+    ##   ..$ : num [1:800] 0.699 0.879 0.94 0.846 0.874 ...
+    ##   ..$ : num [1:800] 0.75 0.933 0.974 0.894 0.932 ...
     ##  $ diffusion_data     :Classes 'tbl_df', 'tbl' and 'data.frame': 10 obs. of  4 variables:
-    ##   ..$ avg_adoption : num [1:10] 0.0773 0.1574 0.2456 0.3431 0.4473 ...
-    ##   ..$ sdev_adoption: num [1:10] 0.0578 0.0861 0.0994 0.1003 0.0923 ...
-    ##   ..$ hdi_lower    : num [1:10] 0.0056 0.0347 0.0723 0.1546 0.2698 ...
-    ##   ..$ hdi_upper    : num [1:10] 0.193 0.341 0.438 0.535 0.626 ...
+    ##   ..$ avg_adoption : num [1:10] 0.0712 0.1479 0.2343 0.3314 0.4364 ...
+    ##   ..$ sdev_adoption: num [1:10] 0.0504 0.0773 0.0915 0.0947 0.09 ...
+    ##   ..$ hdi_lower    : num [1:10] 0.00441 0.02214 0.07387 0.15718 0.26203 ...
+    ##   ..$ hdi_upper    : num [1:10] 0.16 0.291 0.411 0.525 0.605 ...
     ##  $ diffusion_actual   :Classes 'tbl_df', 'tbl' and 'data.frame': 5 obs. of  5 variables:
     ##   ..$ t    : num [1:5] 2 4 6 8 10
     ##   ..$ n    : int [1:5] 10 10 10 10 10
@@ -191,18 +192,29 @@ purrr::pluck(pred_diffusion, "diffusion_data")
     ## # A tibble: 10 x 4
     ##    avg_adoption sdev_adoption hdi_lower hdi_upper
     ##           <dbl>         <dbl>     <dbl>     <dbl>
-    ##  1       0.0773        0.0578   0.00560     0.193
-    ##  2       0.157         0.0861   0.0347      0.341
-    ##  3       0.246         0.0994   0.0723      0.438
-    ##  4       0.343         0.100    0.155       0.535
-    ##  5       0.447         0.0923   0.270       0.626
-    ##  6       0.552         0.0832   0.375       0.702
-    ##  7       0.648         0.0804   0.496       0.808
-    ##  8       0.728         0.0829   0.581       0.893
-    ##  9       0.792         0.0856   0.621       0.939
-    ## 10       0.840         0.0859   0.658       0.972
+    ##  1       0.0712        0.0504   0.00441     0.160
+    ##  2       0.148         0.0773   0.0221      0.291
+    ##  3       0.234         0.0915   0.0739      0.411
+    ##  4       0.331         0.0947   0.157       0.525
+    ##  5       0.436         0.0900   0.262       0.605
+    ##  6       0.542         0.0843   0.365       0.699
+    ##  7       0.640         0.0843   0.487       0.803
+    ##  8       0.723         0.0881   0.563       0.880
+    ##  9       0.789         0.0908   0.623       0.942
+    ## 10       0.838         0.0907   0.664       0.970
 
 Outlook
 =======
 
 This packages contains the main functions to fit and plot a Bayesian Bass Model and predict future uptake of innovations. However, some functions such as getter functions are still missing. I do not plan to develop this package further in the near future, but maybe people in innovation science may find it useful. Feel free to clone and add new features to this package.
+
+Resources
+=========
+
+E.M. Rogers, Diffusion of innovations, 5th ed, Free Press, New York, 2003.
+
+F.M. Bass, A New Product Growth for Model Consumer Durables, Manag. Sci. 15 (1969) 215–227. <doi:10.1287/mnsc.15.5.215>.
+
+V. Mahajan, E. Muller, and F.M. Bass, New Product Diffusion Models in Marketing: A Review and Directions for Research, in: N. Nakićenović, and A. Grübler (Eds.), Diffus. Technol. Soc. Behav., Springer Berlin Heidelberg, Berlin, Heidelberg, 1991: pp. 125–177. <doi:10.1007/978-3-662-02700-4_6>.
+
+S.T. Mennemeyer, N. Menachemi, S. Rahurkar, and E.W. Ford, Impact of the HITECH Act on physicians’ adoption of electronic health records, J. Am. Med. Inform. Assoc. 23 (2016) 375–379. <doi:10.1093/jamia/ocv103>.

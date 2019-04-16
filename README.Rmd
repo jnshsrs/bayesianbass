@@ -141,4 +141,12 @@ Feel free to clone and add new features to this package.
 
 
 
+# Resources
 
+E.M. Rogers, Diffusion of innovations, 5th ed, Free Press, New York, 2003.
+
+F.M. Bass, A New Product Growth for Model Consumer Durables, Manag. Sci. 15 (1969) 215–227. doi:10.1287/mnsc.15.5.215.
+
+V. Mahajan, E. Muller, and F.M. Bass, New Product Diffusion Models in Marketing: A Review and Directions for Research, in: N. Nakićenović, and A. Grübler (Eds.), Diffus. Technol. Soc. Behav., Springer Berlin Heidelberg, Berlin, Heidelberg, 1991: pp. 125–177. doi:10.1007/978-3-662-02700-4_6.
+
+S.T. Mennemeyer, N. Menachemi, S. Rahurkar, and E.W. Ford, Impact of the HITECH Act on physicians’ adoption of electronic health records, J. Am. Med. Inform. Assoc. 23 (2016) 375–379. doi:10.1093/jamia/ocv103.
