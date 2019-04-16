@@ -24,4 +24,7 @@ Imports:
     glue
 RoxygenNote: 6.1.1.9000
 Suggests: 
-    testthat
+    testthat,
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

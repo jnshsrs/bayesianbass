@@ -1,0 +1,33 @@
+---
+title: "Bayesian Bass Model"
+author: "Jens Hüsers"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+The diffusion of innovation was described in detail by Rogers' "Innovation Diffusion Theory" in 1962.
+This framework describes the uptake of a new product, behavior or idea by the course of adoption over time. 
+Later, Bass modelled this course mathematically. The Bass model uses two coefficients to describe the process of adoption, p, the coefficient of innovation and q, the coefficient of imitation.
+
+Both coefficients can be used to investigate and describe the specific patterns of diffusion of innovations. 
+
+Traditionally, this model is fit using methods such as non-linear-least squares.
+
+This package provides functions to apply the Bass model within a Bayesian Framework.
+The Bayesian framework offers richer information about the model, e.g. by providing a complete probability distribution over the model parameter as well as the predictions.
+Furthermore, the Bayesian model is able to incorporate prior knowledge about the adoption process.
+
+This viginette explains the main functions of the `bayesianbass` package using a recent real world scenario of the uptake of electronic health records in U.S. hospitals.
+
+## To be continued

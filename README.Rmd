@@ -1,0 +1,144 @@
+---
+output: 
+    github_document:
+        toc: true
+        toc_depth: 2
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Bayesian Bass Model
+
+*bayesianbass* is a package to create Bass Diffusion Models with a Bayesian Approach.
+
+The Bass model describes mathematically the uptake of innovations, products and behaviors. 
+It is based on the Diffusion of innovation theory by Rogers.
+The model was first published in 1963 by Professor Frank M. Bass followed by a paper published in 1969 providing empricial evidence, that was missing up to this point.
+
+## Bayesian Approach
+
+The Bayesian approach offers advantages such as estimating a complete bivariate probability distribution of the model coefficients, which are described below, and additionally, the Bayesian model is able to incorporate prior knowledge about the coefficients.
+
+## Model Coefficients
+
+The Bass model describes the uptake of a diffusion with two parameters, p and q, which are interpreted as coefficient of innovation and coefficient of imitation respectively.
+Both models describe the diffusion dynamics.
+You can find further information in Bass' publications and in [my blog post](https://sciphy-stats.netlify.com/post/estimating-the-bass-model/) which unfortunately is only available in German.
+Another good resource is Mannemeyer et al. (2005) which describes the basic Bass Model in the methods section.
+
+This package provides functions to create Bayesian Bass Diffusion models with additional functions to plot the diffusion course and predict the uptake of an innovation.
+
+# Installation
+
+Before you download the package, please make sure that you have `rjags` installed. 
+The `bayesianbass` package uses `rjags` which offer implementations of Monte Carlo Markov Chains which simulate the posterior distribution of the Bayesian Bass Diffusion model.
+
+Note that `rjags` requires a separate installation of `JAGS` (just another gibbs sampler). 
+[You can find information about the installation of jags](http://mcmc-jags.sourceforge.net/). 
+After the installation of `JAGS` install `rjags` via `install.packages(rjags)`.
+
+Next install `bayesianbass` using `devtools`
+
+```{r, eval = FALSE}
+devtools::install_github("jnshsrs/bayesianbass")
+```
+
+
+# Create a Bayesian Bass model
+
+```{r}
+library(bayesianbass)
+```
+
+First, we need to specifiy our model, that is then simulated via rjags.
+Do do so, we create a character string describing the model. 
+It also contains the prior distributions which are modeled as normal distributions for both model parameters, p and q.
+The default prior distribution is uncommital, which means that prior to the analysis no specific knowledge about model coefficients are incorporated.
+To get the default prior distributions, just run the `bayesian_bass_model` function without any arguments.
+
+```{r}
+# We create the model description with uncommital prior
+# Function returns a character string which is used by rjags to create the model
+model <- bayesianbass::bayesian_bass_model()
+```
+
+In this example, we use a sample dataset containing two columns, first, the time index and second, the adoption status, indicating wether or not an entity is an adopter. This column may only contain 0 or 1, where the 0 represents a non-adopter and 1 represents an adopter.
+Please note, that the time index column is named `time_index`, the column containing the adoption status can be specified as string in the function call.
+
+We use the model description as function argument to the `bayesian_bass` function.
+
+```{r}
+# load sample adoption data
+data(adoption_data)
+
+# create model
+fit <- bayesian_bass(data = adoption_data,
+                     model = model,
+                     var = "adoption",
+                     plot_diagnostics = T,
+                     n_iter = 1e4)
+
+# display model coefficients
+print(fit)
+```
+
+Next we plot the adoption for each point in time with the fitted bass model superimposed as adoption curve.
+
+```{r}
+plot(fit, se = FALSE)
+```
+
+Furthermore, we can predict the expected uptake.
+
+The function accepts integers as input to the interval parameter. 
+This may be a single integer or a sequence of integers.
+
+```{r}
+predicted_uptake <- predict(fit, interval = 2:4)
+head(predicted_uptake)
+```
+
+However, we did not use the advantages of the bayesian approach to Bass models, which will provide a complete distribution over parameters or predictions.
+
+The following code will provide a complete probability distribution of the predicted uptake on time point t=3.
+We will see that the uptake will be most likely be around 20%.
+
+```{r}
+pred_adoption <- bayesianbass::predict_adoption(fit, time = 3)
+plot(pred_adoption)
+```
+
+Since the plot function returns a ggplot object, we can simply edit the plot.
+
+```{r}
+library(ggplot2)
+plot(pred_adoption) + theme_minimal()
+```
+
+We can also plot the complete diffusion course with the corresponding HDIs (Highes Density Intervals).
+
+```{r}
+pred_diffusion <- predict_diffusion(fit)
+plot(pred_diffusion)
+```
+
+The `bayesianbass::predict_diffussion` function contains additinal information. However no getter function exist, so you may use `purrr`'s `pluck` function to access its elements.
+
+```{r}
+str(pred_diffusion)
+purrr::pluck(pred_diffusion, "diffusion_data")
+```
+
+
+# Outlook
+
+This packages contains the main functions to fit and plot a Bayesian Bass Model and predict future uptake of innovations.
+However, some functions such as getter functions are still missing.
+I do not plan to develop this package further in the near future, but maybe people in innovation science may find it useful. 
+Feel free to clone and add new features to this package.
+
+
+
+
