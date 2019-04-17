@@ -22,7 +22,7 @@ The Bayesian approach offers advantages such as estimating a complete bivariate 
 Model Coefficients
 ------------------
 
-The Bass model describes the uptake of a diffusion with two parameters, p and q, which are interpreted as coefficient of innovation and coefficient of imitation respectively. Both models describe the diffusion dynamics. You can find further information in Bass' publications and in [my blog post](https://sciphy-stats.netlify.com/post/estimating-the-bass-model/) which unfortunately is only available in German. Another good resource is Mannemeyer et al. (2005) which describes the basic Bass Model in the methods section.
+The Bass model describes the uptake of a diffusion with two parameters, p and q, which are interpreted as coefficient of innovation and coefficient of imitation respectively. Together, both coefficients describe the diffusion dynamics. You can find further information in Bass' publications and in [my blog post](https://sciphy-stats.netlify.com/post/estimating-the-bass-model/) which unfortunately is only available in German. Another good resource is Mannemeyer et al. (2005) which describes the basic Bass Model in the methods section.
 
 This package provides functions to create Bayesian Bass Diffusion models with additional functions to plot the diffusion course and predict the uptake of an innovation.
 
@@ -38,6 +38,19 @@ Next install `bayesianbass` using `devtools`
 ``` r
 devtools::install_github("jnshsrs/bayesianbass")
 ```
+
+Main Functions
+============
+
+The main functions of the package are:
+
+1. `bayesian_bass()`
+2. `plot.bayesian_bass()`
+3. `predict.bayesian_bass()`
+4. `predict_adoption()` with a `plot` generic
+5. `predict_diffusion()` with a `plot` generic
+
+These functions are introduced in the following sections
 
 Create a Bayesian Bass model
 ============================
