@@ -131,7 +131,6 @@ str(pred_diffusion)
 purrr::pluck(pred_diffusion, "diffusion_data")
 ```
 
-
 # Outlook
 
 This packages contains the main functions to fit and plot a Bayesian Bass Model and predict future uptake of innovations.
