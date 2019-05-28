@@ -5,7 +5,6 @@ cache: packages
 
 sudo: true
 
-r_binary_packages:
 before_install:
   - sudo add-apt-repository ppa:marutter/rrutter
   - sudo apt-get update
