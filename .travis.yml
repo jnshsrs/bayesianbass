@@ -7,9 +7,9 @@ sudo: true
 
 r_binary_packages:
 before_install:
-  - sudo add-apt-repository ppa:marutter/rrutter
-  - sudo apt-get update
-  - sudo apt-get install jags
+  - sudo add-apt-repository --yes ppa:marutter/rrutter
+  - sudo apt-get --yes update
+  - sudo apt-get --yes install jags
   - sudo apt-get install r-cran-rjags
 
 r_packages:
