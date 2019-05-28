@@ -4,11 +4,9 @@ language: R
 cache: packages
 
 sudo: true
-before_install:
-  - sudo add-apt-repository ppa:marutter/rrutter
-  - sudo apt-get update
-  - sudo apt-get install jags
-  - sudo apt-get install r-cran-rjags
+
+r_binary_packages:
+  - rjags
 
 r_packages:
   - covr
