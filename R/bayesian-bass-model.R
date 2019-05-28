@@ -6,6 +6,8 @@
 #'
 #' @export
 #'
+#' @import rjags
+#'
 bayesian_bass_model <- function(p_mean = 1e-6, p_sdev = .5, q_mean = 1e-6, q_sdev = .5) {
   model <- paste0("model {
     # likelihood
