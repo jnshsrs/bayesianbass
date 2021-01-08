@@ -11,6 +11,9 @@
 
 \item{...}{}
 }
+\value{
+
+}
 \description{
 Print bayesian bass model
 }

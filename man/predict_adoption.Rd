@@ -11,6 +11,9 @@ predict_adoption(obj, time)
 
 \item{time}{An integer value specifing the point in time}
 }
+\value{
+
+}
 \description{
 The adoption rate is defined as the proportion of adopters of a specific point of time
 }

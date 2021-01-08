@@ -4,8 +4,14 @@
 \alias{bayesian_bass}
 \title{Function to fit Bayesian Model}
 \usage{
-bayesian_bass(data, var, model, n_iter = 5000, n_thin = 50,
-  plot_diagnostics = FALSE)
+bayesian_bass(
+  data,
+  var,
+  model,
+  n_iter = 5000,
+  n_thin = 50,
+  plot_diagnostics = FALSE
+)
 }
 \arguments{
 \item{data}{A data.frame with two columns, the first must be named jahr and contains time index, the second colum is named var and is a binary variable, representing}

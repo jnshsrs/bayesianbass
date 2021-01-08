@@ -4,8 +4,7 @@
 \alias{bayesian_bass_model}
 \title{Specification of Bayesian Bass Model}
 \usage{
-bayesian_bass_model(p_mean = 1e-06, p_sdev = 0.5, q_mean = 1e-06,
-  q_sdev = 0.5)
+bayesian_bass_model(p_mean = 1e-06, p_sdev = 0.5, q_mean = 1e-06, q_sdev = 0.5)
 }
 \value{
 A character string containing the Bayesian Bass Diffusion Model specifications

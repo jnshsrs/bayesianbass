@@ -9,6 +9,9 @@ posterior(x, time_index = 1)
 \arguments{
 \item{time_index}{}
 }
+\value{
+
+}
 \description{
 This function returns a prediction based on the MCMC sampled rjags chains.
 The point in time of prediction corresponds to the given time_index

@@ -9,6 +9,9 @@
 \arguments{
 \item{obj}{An object of class \code{bayesian_bass_adoption}}
 }
+\value{
+
+}
 \description{
 Plot distribution of adoption rate
 }

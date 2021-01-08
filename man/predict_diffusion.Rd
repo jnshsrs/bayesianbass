@@ -11,6 +11,9 @@ predict_diffusion(obj, time_index = NULL)
 
 \item{time_index}{An integer vector conaining a sequence of time intervals}
 }
+\value{
+
+}
 \description{
 Predict the diffusion based on a bayesian bass model
 }

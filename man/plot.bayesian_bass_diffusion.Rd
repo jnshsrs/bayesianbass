@@ -9,6 +9,9 @@
 \arguments{
 \item{obj}{A Bayesian Bass model}
 }
+\value{
+
+}
 \description{
 Plot Diffusion Curve
 }

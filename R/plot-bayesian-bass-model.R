@@ -27,7 +27,7 @@ plot.bayesian_bass <- function(x, se = F, ...) {
       geom_line() +
       geom_point(data = adoption_rates,
                  aes(x = t, y = avg), inherit.aes = FALSE) +
-      scale_y_continuous("Proportional Adoption", labels = scales::percent) +
+      scale_y_continuous("Proportional Adoption", labels = scales::percent, limits = c(0, 1)) +
       theme_minimal()
 
     if (se) {
